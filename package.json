@@ -1,0 +1,32 @@
+{
+  "name": "graphql_api_sample",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint-fix": "tslint -c tslint.json 'src/**/*.ts' --fix"
+  },
+  "author": "Hirokazu Yokoyama",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/express": "^4.16.0",
+    "@types/express-graphql": "^0.6.2",
+    "@types/graphql-relay": "^0.4.9",
+    "@types/mysql2": "types/mysql2",
+    "@types/node": "^10.12.18",
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4",
+    "express-graphql": "^0.7.1",
+    "graphql": "^14.0.2",
+    "graphql-relay": "^0.5.5",
+    "mysql2": "^1.6.4",
+    "squel": "^5.12.2",
+    "ts-loader": "^5.3.2",
+    "ts-node": "^7.0.1",
+    "tslint": "^5.12.0",
+    "typescript": "^3.2.2",
+    "webpack": "^4.28.1",
+    "webpack-cli": "^3.1.2"
+  }
+}
