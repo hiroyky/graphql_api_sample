@@ -1,0 +1,31 @@
+version: "3"
+services:
+  mysql-sample:
+    image: mysql:5.6
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
+    volumes:
+      - "./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d"
+    ports:
+      - 30000:3306
+    environment:
+      - MYSQL_DATABASE=graphql_sample
+      - MYSQL_ROOT_PASSWORD=password
+  api:
+    image: node:10.14-alpine
+    volumes:
+      - "./dist/app.js:/src/app.js"
+      - "./package.json:/src/package.json"
+    working_dir: /src
+    command: [sh, -c, node app.js]
+    ports:
+      - 3000:3000
+    depends_on:
+      - mysql-sample
+    links:
+      - mysql-sample
+    environment:
+      - DB_HOSTNAME=mysql-sample
+      - DB_USERNAME=root
+      - DB_PORT=3306
+      - DB_PASSWORD=password
+      - DB_NAME=graphql_sample
