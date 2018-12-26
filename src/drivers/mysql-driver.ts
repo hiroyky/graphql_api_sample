@@ -7,16 +7,15 @@ export default class MySqlDriver {
         return this.connection !== null;
     }
 
-    public open(
+    public async open(
         args: mysql.ConnectionOptions,
         currentRetry = 0,
-        retry = 3,
-        retryIntervalMsec = 500,
+        retry = 5,
+        retryIntervalMsec = 1000,
     ) {
-        try {
-            this.connection = mysql.createConnection(args);
-            console.log("connected");
 
+        try {
+            await this.connect(args);
         } catch (err) {
             if (currentRetry < retry) {
                 console.warn("failed to connect mysql. retry.. " + currentRetry);
@@ -86,6 +85,19 @@ export default class MySqlDriver {
                 return;
             }
             this.connection.commit((err) => {
+                if (err) {
+                    reject(err);
+                    return;
+                }
+                resolve();
+            });
+        });
+    }
+
+    protected connect(args: mysql.ConnectionOptions) {
+        return new Promise((resolve, reject) => {
+            this.connection = mysql.createConnection(args);
+            this.connection.connect((err) => {
                 if (err) {
                     reject(err);
                     return;
