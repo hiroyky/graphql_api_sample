@@ -64,21 +64,21 @@ export const Order = new GraphQLObjectType({
 });
 
 export const { connectionType: UserConnection } = connectionDefinitions({
-    name: "UserConnection",
+    name: "User",
     nodeType: User,
 });
 
 export const { connectionType: ProductConnection } = connectionDefinitions({
-    name: "ProductConnection",
+    name: "Product",
     nodeType: Product,
 });
 
 export const { connectionType: MakerConnection } = connectionDefinitions({
-    name: "MakerConnection",
+    name: "Maker",
     nodeType: Maker,
 });
 
 export const { connectionType: OrderConnection } = connectionDefinitions({
-    name: "OrderConnection",
+    name: "Order",
     nodeType: Order,
 });

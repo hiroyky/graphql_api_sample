@@ -22,33 +22,33 @@ type GraphQLSampleMutations {
 
 type GraphQLSampleQueries {
   user(id: ID): User
-  users(id: ID, limit: Int, offset: Int = 0, name: String, gender: Gender, rank: MemberRank): UserConnectionConnection
+  users(id: ID, limit: Int, offset: Int = 0, name: String, gender: Gender, rank: MemberRank): UserConnection
   maker(id: ID): Maker
-  makers(id: ID, limit: Int, offset: Int = 0, name: String): MakerConnectionConnection
+  makers(id: ID, limit: Int, offset: Int = 0, name: String): MakerConnection
   product(id: ID): Product
-  products(id: ID, limit: Int, offset: Int = 0, name: String, modelNumber: String, price: RangeInt): ProductConnectionConnection
+  products(id: ID, limit: Int, offset: Int = 0, name: String, modelNumber: String, price: RangeInt): ProductConnection
   order(id: ID): Order
-  orders(id: ID, limit: Int, offset: Int = 0, orderDate: RangeInt): OrderConnectionConnection
+  orders(id: ID, limit: Int, offset: Int = 0, orderDate: RangeInt): OrderConnection
 }
 
 """製造業者"""
 type Maker {
   id: ID
   name: String
-  products: ProductConnectionConnection
+  products: ProductConnection
 }
 
 """A connection to a list of items."""
-type MakerConnectionConnection {
+type MakerConnection {
   """Information to aid in pagination."""
   pageInfo: PageInfo!
 
   """A list of edges."""
-  edges: [MakerConnectionEdge]
+  edges: [MakerEdge]
 }
 
 """An edge in a connection."""
-type MakerConnectionEdge {
+type MakerEdge {
   """The item at the end of the edge"""
   node: Maker
 
@@ -79,20 +79,20 @@ type Order {
   user: User
 
   """注文に含まれた商品"""
-  products(limit: Int, offset: Int = 0): ProductConnectionConnection
+  products(limit: Int, offset: Int = 0): ProductConnection
 }
 
 """A connection to a list of items."""
-type OrderConnectionConnection {
+type OrderConnection {
   """Information to aid in pagination."""
   pageInfo: PageInfo!
 
   """A list of edges."""
-  edges: [OrderConnectionEdge]
+  edges: [OrderEdge]
 }
 
 """An edge in a connection."""
-type OrderConnectionEdge {
+type OrderEdge {
   """The item at the end of the edge"""
   node: Order
 
@@ -131,16 +131,16 @@ type Product {
 }
 
 """A connection to a list of items."""
-type ProductConnectionConnection {
+type ProductConnection {
   """Information to aid in pagination."""
   pageInfo: PageInfo!
 
   """A list of edges."""
-  edges: [ProductConnectionEdge]
+  edges: [ProductEdge]
 }
 
 """An edge in a connection."""
-type ProductConnectionEdge {
+type ProductEdge {
   """The item at the end of the edge"""
   node: Product
 
@@ -163,20 +163,20 @@ type User {
 
   """会員ランク"""
   rank: MemberRank
-  orders: OrderConnectionConnection
+  orders: OrderConnection
 }
 
 """A connection to a list of items."""
-type UserConnectionConnection {
+type UserConnection {
   """Information to aid in pagination."""
   pageInfo: PageInfo!
 
   """A list of edges."""
-  edges: [UserConnectionEdge]
+  edges: [UserEdge]
 }
 
 """An edge in a connection."""
-type UserConnectionEdge {
+type UserEdge {
   """The item at the end of the edge"""
   node: User
 
