@@ -1,0 +1,198 @@
+schema {
+  query: GraphQLSampleQueries
+  mutation: GraphQLSampleMutations
+}
+
+"""性別"""
+enum Gender {
+  """男性"""
+  male
+
+  """女性"""
+  female
+
+  """その他"""
+  other
+}
+
+type GraphQLSampleMutations {
+  createUser(user: UserInputArgument!): User
+  updateUser(user: UserUpdateArgument!): User
+}
+
+type GraphQLSampleQueries {
+  user(id: ID): User
+  users(id: ID, limit: Int, offset: Int = 0, name: String, gender: Gender, rank: MemberRank): UserConnectionConnection
+  maker(id: ID): Maker
+  makers(id: ID, limit: Int, offset: Int = 0, name: String): MakerConnectionConnection
+  product(id: ID): Product
+  products(id: ID, limit: Int, offset: Int = 0, name: String, modelNumber: String, price: RangeInt): ProductConnectionConnection
+  order(id: ID): Order
+  orders(id: ID, limit: Int, offset: Int = 0, orderDate: RangeInt): OrderConnectionConnection
+}
+
+"""製造業者"""
+type Maker {
+  id: ID
+  name: String
+  products: ProductConnectionConnection
+}
+
+"""A connection to a list of items."""
+type MakerConnectionConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [MakerConnectionEdge]
+}
+
+"""An edge in a connection."""
+type MakerConnectionEdge {
+  """The item at the end of the edge"""
+  node: Maker
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+"""会員ランク"""
+enum MemberRank {
+  """一般会員"""
+  general
+
+  """ゴールド会員"""
+  gold
+
+  """プラチナ会員"""
+  platinum
+}
+
+"""受注情報"""
+type Order {
+  id: ID
+
+  """受注日時(UNIX TIME)"""
+  orderDate: Int
+
+  """注文したユーザ"""
+  user: User
+
+  """注文に含まれた商品"""
+  products(limit: Int, offset: Int = 0): ProductConnectionConnection
+}
+
+"""A connection to a list of items."""
+type OrderConnectionConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [OrderConnectionEdge]
+}
+
+"""An edge in a connection."""
+type OrderConnectionEdge {
+  """The item at the end of the edge"""
+  node: Order
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+"""Information about pagination in a connection."""
+type PageInfo {
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+}
+
+"""商品"""
+type Product {
+  id: ID
+
+  """商品名"""
+  name: String
+
+  """型番"""
+  modelNumber: String
+
+  """販売価格"""
+  price: Int
+  maker: Maker
+}
+
+"""A connection to a list of items."""
+type ProductConnectionConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [ProductConnectionEdge]
+}
+
+"""An edge in a connection."""
+type ProductConnectionEdge {
+  """The item at the end of the edge"""
+  node: Product
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+input RangeInt {
+  min: Int
+  max: Int
+}
+
+"""お客様の情報"""
+type User {
+  id: ID
+  name: String
+
+  """性別"""
+  gender: Gender
+
+  """会員ランク"""
+  rank: MemberRank
+  orders: OrderConnectionConnection
+}
+
+"""A connection to a list of items."""
+type UserConnectionConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [UserConnectionEdge]
+}
+
+"""An edge in a connection."""
+type UserConnectionEdge {
+  """The item at the end of the edge"""
+  node: User
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+input UserInputArgument {
+  name: String!
+  gender: String!
+  rank: String
+}
+
+input UserUpdateArgument {
+  id: ID!
+  name: String
+  gender: String
+  rank: String
+}
