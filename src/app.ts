@@ -26,7 +26,7 @@ async function beforeExit() {
 }
 
 http.createServer(app);
-init();
+init().then(() => app.emit("ready"));
 
 async function init() {
     app.use(bodyParser.urlencoded({ extended: true }));
@@ -42,6 +42,4 @@ async function init() {
         password: process.env.DB_PASSWORD,
         port: parseInt(process.env.DB_PORT as string),
     });
-
-    app.emit("ready");
 }
